@@ -11,12 +11,20 @@ namespace CookiesDemo.Controllers
         // GET: Default
         public ActionResult Index()
         {
-            HttpCookie cookie = Request.Cookies["cookie"];
+            string cName = "welcomeMessage";
+            HttpCookie cookie = Request.Cookies[cName];
             if (cookie == null)
             {
-                Response.Cookies["cookie"].Value = "Välkommen!";
-                Response.Cookies["cookie"].Expires = 
+                Response.Cookies[cName].Value = "Välkommen!";
+                Response.Cookies[cName].Expires = 
                     DateTime.Now.AddDays(1);
+                ViewBag.CookieMessage = "Skapade cookie";
+            }
+            else
+            {
+                string message = Request.Cookies[cName].Value;
+                ViewBag.CookieMessage = 
+                    "Hittade cookie med meddelandet: "+ message;
             }
             return View();
         }
