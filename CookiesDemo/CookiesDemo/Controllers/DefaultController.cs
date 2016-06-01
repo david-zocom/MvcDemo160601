@@ -15,17 +15,22 @@ namespace CookiesDemo.Controllers
             HttpCookie cookie = Request.Cookies[cName];
             if (cookie == null)
             {
-                Response.Cookies[cName].Value = "Välkommen!";
-                Response.Cookies[cName].Expires = 
+                Response.Cookies[cName].Value =
+                    Server.UrlEncode("Välkommen!");
+                Response.Cookies[cName].Expires =
                     DateTime.Now.AddDays(1);
+                //Response.Cookies[cName].
                 ViewBag.CookieMessage = "Skapade cookie";
             }
             else
             {
-                string message = Request.Cookies[cName].Value;
-                ViewBag.CookieMessage = 
-                    "Hittade cookie med meddelandet: "+ message;
+                string message = Server.UrlDecode(
+                    Request.Cookies[cName].Value);
+                ViewBag.CookieMessage =
+                    "Hittade cookie med meddelandet: " +
+                    message;
             }
+            //Response.Cookies[cName].Expires = DateTime.Now.AddDays(-1);
             return View();
         }
     }
