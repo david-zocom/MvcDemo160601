@@ -12,7 +12,12 @@ namespace CookiesDemo.Controllers
         public ActionResult Index()
         {
             HttpCookie cookie = Request.Cookies["cookie"];
-
+            if (cookie == null)
+            {
+                Response.Cookies["cookie"].Value = "Välkommen!";
+                Response.Cookies["cookie"].Expires = 
+                    DateTime.Now.AddDays(1);
+            }
             return View();
         }
     }
